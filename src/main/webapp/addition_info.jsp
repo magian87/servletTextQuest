@@ -9,10 +9,8 @@
 <ul>
     <c:forEach items="${sessionScope.user.getQuests()}" var="questId">
         <c:set var="quest" value="${questRepository.getById(questId)}"/>
-        <li>
                 <p>Наименование квеста: ${quest.getText()}</p>
                 <p>Квест завершен: ${quest.isFinished(sessionScope.user)}</p>
-        </li>
     </c:forEach>
 </ul>
 
@@ -21,9 +19,7 @@
 <ul>
     <c:forEach items="${sessionScope.user.getItems()}" var="itemId">
         <c:set var="item" value="${itemRepository.getById(itemId)}"/>
-        <li>
-                <p>Инвентарь: ${item.getName()}</p>
-        </li>
+              ${item.getName()}<br>
     </c:forEach>
 </ul>
 

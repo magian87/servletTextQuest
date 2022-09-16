@@ -8,12 +8,14 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
-<h1>Вход в игру</h1>
+<h1>Добро пожаловать в пошаговую игру</h1>
+<br>
 <form action="${pageContext.request.contextPath}/entrance" method="post">
     <div>
-        <label for="name">Name:</label>
+        <label for="name">Имя пользователя:</label>
         <input type="text" id="name" name="username">
     </div>
+    <br>
     <div class="button">
         <button type="submit" class="btn btn-success">Зайти в игру</button>
     </div>

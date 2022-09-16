@@ -129,12 +129,13 @@ public class InitGame {
                         .text("Давай я тебе дам квест?")
                         .answers(List.of(
                                 Question.Answer.builder()
-                                        .text("Нет")
+                                        .text("Да")
+                                        .nextQuestion(3)
                                         .build(),
                                 Question.Answer.builder()
-                                        .text("Да")
-                                        .questId(1)
+                                        .text("Нет")
                                         .build()
+
                         ))
                         .build()
         );
@@ -142,11 +143,17 @@ public class InitGame {
         questions.add(
                 Question.builder()
                         .id(3)
-                        .text("Чего хомим?")
+                        .text("Выбирай что ищешь")
                         .answers(List.of(
                                 Question.Answer.builder()
-                                        .text("Так просто надо")
+                                        .text("Парализатор")
+                                        .questId(1)
+                                        .build(),
+                                Question.Answer.builder()
+                                        .text("Замораживатель")
+                                        .questId(2)
                                         .build()
+
                         ))
                         .build()
         );
@@ -160,6 +167,11 @@ public class InitGame {
 
         quests.add(Quest.builder()
                 .id(1)
+                .text("Парализатор")
+                .isFinished(new CheckItemInventoryPredicate(2))
+                .build());
+        quests.add(Quest.builder()
+                .id(2)
                 .text("Замораживатель")
                 .isFinished(new CheckItemInventoryPredicate(3))
                 .build());
