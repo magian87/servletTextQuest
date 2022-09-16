@@ -19,6 +19,7 @@ public class InitGame {
                 .id(idRoom++)
                 .name("Garden")
                 .npcs(List.of(1))
+                .items(List.of(1))
                 .build();
         rooms.add(garden);
 

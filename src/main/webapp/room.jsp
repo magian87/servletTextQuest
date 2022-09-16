@@ -63,12 +63,19 @@
 
 </div>
 <div class="inventory">
-
     <h1>inventory</h1>
+
+    <c:forEach items="${items}" var="item">
+        <form action="${pageContext.request.contextPath}/room" method="post">
+            <input type="hidden" name="addItemId" value="${item.getId()}">
+            <button type="submit">${item.getName()}</button>
+        </form>
+    </c:forEach>
+
 </div>
 
 <div class="foother">
-    -
+    <jsp:include page="addition_info.jsp"/>
 </div>
 
 <script>

@@ -1,7 +1,8 @@
 
 
 body {
-    background-color: blueviolet;
+    background-image: url("/static/background.jpg");
+    background-size: 1920px 1080px;
     max-width: 960px;
     margin: 0 auto;
 }

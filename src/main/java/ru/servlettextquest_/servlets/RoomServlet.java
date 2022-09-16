@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class RoomServlet extends HttpServlet {
     private RoomRepository roomRepository = null;
     private Repository<Integer, Npc> npcRepository = null;
+    private Repository<Integer, Item> itemRepository = null;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -29,6 +30,7 @@ public class RoomServlet extends HttpServlet {
         ServletContext servletContext = config.getServletContext();
         roomRepository = (RoomRepository) servletContext.getAttribute("roomRepository");
         npcRepository = (Repository<Integer, Npc>) servletContext.getAttribute("npcRepository");
+        itemRepository = (Repository<Integer, Item>) servletContext.getAttribute("itemRepository");
     }
 
 
@@ -57,6 +59,7 @@ public class RoomServlet extends HttpServlet {
                                 .map(s -> RoomInfo.builder().id(s.getKey()).name(s.getValue()).build()).toList();
         req.setAttribute("doorInfo", doorInfo);
 
+
         List<Npc> npcs = new ArrayList<>();
         for (Integer npcId : currentRoom.getNpcs()){
             Npc npc = npcRepository.getById(npcId);
@@ -64,6 +67,15 @@ public class RoomServlet extends HttpServlet {
         }
 
         req.setAttribute("npcs", npcs);
+
+        List<Item> items = new ArrayList<>();
+        for (Integer itemId : currentRoom.getItems()){
+            Item item = itemRepository.getById(itemId);
+            items.add(item);
+        }
+
+        req.setAttribute("items", items);
+
 
         getServletContext()
                 .getRequestDispatcher("/room.jsp")
@@ -73,8 +85,17 @@ public class RoomServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
-        String nextRoomId = req.getParameter("nextRoomId");
-        user.setCurrentRoomId(Integer.parseInt(nextRoomId));
+
+        if(req.getParameter("nextRoomId") != null) {
+            String nextRoomId = req.getParameter("nextRoomId");
+            user.setCurrentRoomId(Integer.parseInt(nextRoomId));
+        }
+
+        if(req.getParameter("addItemId") != null) {
+            String itemId = req.getParameter("addItemId");
+            user.getItems().add(Integer.parseInt(itemId));
+        }
+
         resp.sendRedirect("room");
 
 
