@@ -8,7 +8,7 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
-<h1>Добро пожаловать в пошаговую игру</h1>
+<h3>Добро пожаловать в пошаговую игру</h3>
 <br>
 <form action="${pageContext.request.contextPath}/entrance" method="post">
     <div>
@@ -17,7 +17,7 @@
     </div>
     <br>
     <div class="button">
-        <button type="submit" class="btn btn-success">Зайти в игру</button>
+        <button type="submit" class="btn-success">Зайти в игру</button>
     </div>
 </form>
 </body>
