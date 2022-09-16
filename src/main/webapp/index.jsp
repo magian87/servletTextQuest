@@ -8,6 +8,7 @@
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
 <body>
+<br>
 <h3>Добро пожаловать в пошаговую игру</h3>
 <br>
 <form action="${pageContext.request.contextPath}/entrance" method="post">
