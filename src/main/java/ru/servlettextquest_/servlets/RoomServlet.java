@@ -1,5 +1,6 @@
 package ru.servlettextquest_.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.servlettextquest_.classes.*;
 import ru.servlettextquest_.repository.Repository;
 import ru.servlettextquest_.repository.RoomRepository;
@@ -45,23 +46,22 @@ public class RoomServlet extends HttpServlet {
 
         Map<Integer, String> doors =
 
-        roomRepository.getById(currentRoomId)
-                .getDoors()
-                .stream()
-                .map(Door::getRoomId)
-                .collect(Collectors.toMap(Function.identity(), roomId -> roomRepository.getById(roomId).getName()));
-
+                roomRepository.getById(currentRoomId)
+                        .getDoors()
+                        .stream()
+                        .map(Door::getRoomId)
+                        .collect(Collectors.toMap(Function.identity(), roomId -> roomRepository.getById(roomId).getName()));
 
 
         List<RoomInfo> doorInfo = doors
                 .entrySet()
-                        .stream()
-                                .map(s -> RoomInfo.builder().id(s.getKey()).name(s.getValue()).build()).toList();
+                .stream()
+                .map(s -> RoomInfo.builder().id(s.getKey()).name(s.getValue()).build()).toList();
         req.setAttribute("doorInfo", doorInfo);
 
 
         List<Npc> npcs = new ArrayList<>();
-        for (Integer npcId : currentRoom.getNpcs()){
+        for (Integer npcId : currentRoom.getNpcs()) {
             Npc npc = npcRepository.getById(npcId);
             npcs.add(npc);
         }
@@ -69,7 +69,7 @@ public class RoomServlet extends HttpServlet {
         req.setAttribute("npcs", npcs);
 
         List<Item> items = new ArrayList<>();
-        for (Integer itemId : currentRoom.getItems()){
+        for (Integer itemId : currentRoom.getItems()) {
             Item item = itemRepository.getById(itemId);
             items.add(item);
         }
@@ -86,14 +86,25 @@ public class RoomServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
 
-        if(req.getParameter("nextRoomId") != null) {
+        if (req.getParameter("nextRoomId") != null) {
             String nextRoomId = req.getParameter("nextRoomId");
             user.setCurrentRoomId(Integer.parseInt(nextRoomId));
         }
 
-        if(req.getParameter("addItemId") != null) {
-            String itemId = req.getParameter("addItemId");
-            user.getItems().add(Integer.parseInt(itemId));
+        if (req.getParameter("addItemId") != null) {
+            Integer itemId = Integer.parseInt(req.getParameter("addItemId"));
+            Item curItem = itemRepository.getById(itemId);
+
+            if (curItem.getStrength() != null)
+                user.setStrength(user.getStrength() + curItem.getStrength());
+            if (curItem.getDexterity() != null)
+                user.setDexterity(user.getDexterity() + curItem.getDexterity());
+            if (curItem.getLife() != null)
+                user.setLife(user.getLife() + curItem.getLife());
+
+
+            user.getItems().add(itemId);
+            //Item curItem = itemRepository.getById()
         }
 
         resp.sendRedirect("room");

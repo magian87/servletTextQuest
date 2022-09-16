@@ -32,6 +32,9 @@ public class EntranceServlet extends HttpServlet {
         User user = new User();
         user.setUsername(userName);
         user.setCurrentRoomId(1);
+        user.setStrength(100);
+        user.setDexterity(100);
+        user.setLife(100);
 
 
         session.setAttribute("user", user);

@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Вход в игру</title>
-    <link href="static/main.css" rel="stylesheet">
+    <link href="static/bootstrap.css" rel="stylesheet">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
 </head>
@@ -15,7 +15,7 @@
         <input type="text" id="name" name="username">
     </div>
     <div class="button">
-        <button type="submit" class="btn btn-success">Go</button>
+        <button type="submit" class="btn btn-success">Зайти в игру</button>
     </div>
 </form>
 </body>

@@ -5,24 +5,24 @@
 <c:set var="questRepository" value="${applicationScope.get('questRepository')}"/>
 <c:set var="itemRepository" value="${applicationScope.get('itemRepository')}"/>
 
-<h3>Quests:</h3>
+<h3>Квесты:</h3>
 <ul>
     <c:forEach items="${sessionScope.user.getQuests()}" var="questId">
         <c:set var="quest" value="${questRepository.getById(questId)}"/>
         <li>
-                <p>Quest name: ${quest.getText()}</p>
-                <p>Is finished: ${quest.isFinished(sessionScope.user)}</p>
+                <p>Наименование квеста: ${quest.getText()}</p>
+                <p>Квест завершен: ${quest.isFinished(sessionScope.user)}</p>
         </li>
     </c:forEach>
 </ul>
 
 
-<h3>Items:</h3>
+<h3>Инвентарь:</h3>
 <ul>
     <c:forEach items="${sessionScope.user.getItems()}" var="itemId">
         <c:set var="item" value="${itemRepository.getById(itemId)}"/>
         <li>
-                <p>item name: ${item.getName()}</p>
+                <p>Инвентарь: ${item.getName()}</p>
         </li>
     </c:forEach>
 </ul>
