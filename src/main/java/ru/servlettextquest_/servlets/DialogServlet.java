@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-@WebServlet(name = "DialogServlet", value = "/dialog", initParams = @WebInitParam(name = "location", value = "D:/Uploads"))
+@WebServlet(name = "DialogServlet", value = "/dialog")
+//@WebServlet(name = "DialogServlet", value = "/dialog", initParams = @WebInitParam(name = "location", value = "D:/Uploads"))
 public class DialogServlet extends HttpServlet {
 
     private Repository<Integer, Question> questionRepository;
@@ -27,7 +30,8 @@ public class DialogServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         if(req.getParameter("finish") != null) {
             resp.sendRedirect("room");
             return;
@@ -37,8 +41,7 @@ public class DialogServlet extends HttpServlet {
             String questId = req.getParameter("quest");
 
             User user = (User) req.getSession().getAttribute("user");
-
-            user.getQuests().add(Integer.parseInt(questId));
+            user.addQuest(Integer.parseInt(questId));
 
             resp.sendRedirect("room");
             return;
@@ -51,8 +54,7 @@ public class DialogServlet extends HttpServlet {
         getServletContext()
                 .getRequestDispatcher("/dialog.jsp")
                 .forward(req, resp);
-        //resp.sendRedirect("dialog?question="+questionId);
-        //super.doGet(req, resp);
+
     }
 
     @Override

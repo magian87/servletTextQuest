@@ -19,4 +19,8 @@ public class User  {
 
     private List<Integer> quests = new ArrayList<>();
     private List<Integer> items = new ArrayList<>();
+
+    public void addQuest(Integer questId){
+        quests.add(questId);
+    }
 }
