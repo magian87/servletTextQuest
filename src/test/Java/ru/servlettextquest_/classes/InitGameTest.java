@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class InitGameTest {
 
-    @Test
+   /* @Test
     public void receiveRooms() {
         assertTrue(true);
-    }
+    }*/
 }

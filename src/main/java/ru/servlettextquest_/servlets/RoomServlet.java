@@ -83,7 +83,7 @@ public class RoomServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = (User) req.getSession().getAttribute("user");
 
         if (req.getParameter("nextRoomId") != null) {
@@ -103,7 +103,7 @@ public class RoomServlet extends HttpServlet {
                 user.setLife(user.getLife() + curItem.getLife());
 
 
-            user.getItems().add(itemId);
+            user.addItem(itemId);
             //Item curItem = itemRepository.getById()
         }
 

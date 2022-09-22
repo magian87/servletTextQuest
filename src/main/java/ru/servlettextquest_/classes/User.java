@@ -23,4 +23,7 @@ public class User  {
     public void addQuest(Integer questId){
         quests.add(questId);
     }
+    public void addItem(Integer itemId){
+        items.add(itemId);
+    }
 }
