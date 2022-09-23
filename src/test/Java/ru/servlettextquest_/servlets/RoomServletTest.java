@@ -1,6 +1,7 @@
 package ru.servlettextquest_.servlets;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -54,6 +55,17 @@ public class RoomServletTest {
     void setup() throws ServletException {
         when(servletConfig.getServletContext()).thenReturn(servletContext);
 
+        Quest quest = Quest.builder()
+                .id(1)
+                .text("Парализатор")
+                .isFinished(new CheckItemInventoryPredicate(2))
+                .build();
+
+        Repository<Integer, Quest> questRepository = new Repository<>();
+        questRepository.save(quest.getId(), quest);
+        when(servletContext.getAttribute(argThat("questRepository"::equals)))
+                .thenReturn(questRepository);
+
         Item item = Item.builder()
                 .id(1)
                 .name("Меч")
@@ -99,6 +111,8 @@ public class RoomServletTest {
 
         when(servletContext.getAttribute(argThat("roomRepository"::equals)))
                 .thenReturn(roomRepository);
+
+
 
         roomServlet.init(servletConfig);
     }

@@ -1,16 +1,48 @@
 
 
 body {
-    background-image: url("/static/background.jpg");
+    /*background-image: url("/static/background.jpg");*/
     background-size: 1920px 1080px;
     max-width: 960px;
     margin: 0 auto;
+}
+
+button{
+    padding: 5px 5px;
 }
 
 div {
     border: 1px solid black;
     padding: 5px 15px;
 }
+
+div.modal {
+    border: 0px solid black;
+}
+
+div.modal-dialog {
+    border: 0px solid black;
+}
+
+
+div.modal-content {
+    border: 0px solid black;
+}
+
+div.modal-header {
+    border: 0px solid black;
+}
+
+div.modal-body {
+    border: 0px solid black;
+}
+
+div.modal-footer {
+    border: 0px solid black;
+}
+
+
+
 
 h1 {
     text-align: center;
@@ -50,7 +82,7 @@ h3 {
 .currentRoom {
     background-color: burlywood;
     float: left;
-    width: 50%;
+    width: 60%;
     height: 100px;
 }
 .health {
@@ -70,7 +102,7 @@ h3 {
 .sidebar57 {
     background-color: burlywood;
     float: left;
-    width: 50%;
+    width: 60%;
     height: 350px;
 }
 
@@ -96,7 +128,7 @@ h3 {
 .foother{
     border-radius: 0 0 10px 10px;
    
-    background-color: green;
+    background-color: burlywood;
     
     text-align: center;
     min-height: 20px;

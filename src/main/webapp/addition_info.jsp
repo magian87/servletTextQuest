@@ -5,7 +5,7 @@
 <c:set var="questRepository" value="${applicationScope.get('questRepository')}"/>
 <c:set var="itemRepository" value="${applicationScope.get('itemRepository')}"/>
 
-<h3>Квесты:</h3>
+<h5>Квесты:</h5>
 <ul>
     <c:forEach items="${sessionScope.user.getQuests()}" var="questId">
         <c:set var="quest" value="${questRepository.getById(questId)}"/>
@@ -15,7 +15,7 @@
 </ul>
 
 
-<h3>Инвентарь:</h3>
+<h5>Инвентарь:</h5>
 <ul>
     <c:forEach items="${sessionScope.user.getItems()}" var="itemId">
         <c:set var="item" value="${itemRepository.getById(itemId)}"/>

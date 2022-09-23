@@ -35,6 +35,7 @@ public class EntranceServlet extends HttpServlet {
         user.setStrength(100);
         user.setDexterity(100);
         user.setLife(100);
+        user.setIsGameOver(false);
 
 
         session.setAttribute("user", user);

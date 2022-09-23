@@ -30,6 +30,8 @@ public class RoomServlet extends HttpServlet {
     private Repository<Integer, Npc> npcRepository = null;
     private Repository<Integer, Item> itemRepository = null;
 
+    private Repository<Integer, Quest> questRepository = null;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -37,6 +39,7 @@ public class RoomServlet extends HttpServlet {
         roomRepository = (RoomRepository) servletContext.getAttribute("roomRepository");
         npcRepository = (Repository<Integer, Npc>) servletContext.getAttribute("npcRepository");
         itemRepository = (Repository<Integer, Item>) servletContext.getAttribute("itemRepository");
+        questRepository = (Repository<Integer, Quest>) servletContext.getAttribute("questRepository");
     }
 
 
@@ -86,6 +89,8 @@ public class RoomServlet extends HttpServlet {
         requestDispatcher.forward(req, resp);
 
 
+
+
     }
 
     @Override
@@ -112,6 +117,27 @@ public class RoomServlet extends HttpServlet {
 
             user.addItem(itemId);
             //Item curItem = itemRepository.getById()
+
+            boolean isAllQuestFinished = true;
+            for (int i = 1; i <= questRepository.size() ; i++) {
+                if (!questRepository.getById(i).isFinished(user)){
+                    isAllQuestFinished = false;
+                    break;
+                }
+                if (user.getUserQuests().size()==0){
+                    isAllQuestFinished = false;
+                    break;
+                } else {
+                    if (!user.getUserQuests().contains(i)){
+                        isAllQuestFinished = false;
+                        break;
+                    }
+                }
+
+            }
+            if (isAllQuestFinished){
+                user.setIsGameOver(true);
+            }
 
         }
 

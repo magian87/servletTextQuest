@@ -3,9 +3,14 @@
 <html>
 <head>
     <title>Вход в игру</title>
-    <link href="static/bootstrap.css" rel="stylesheet">
+    <%--    <link href="static/bootstrap.css" rel="stylesheet">--%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <script src="<c:url value="/static/jquery-3.6.0.min.js"/>"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/bootstrap.bundle.min.js"></script>
+
 </head>
 <body>
 <br>
@@ -18,10 +23,14 @@
     </div>
     <br>
     <div class="button">
-        <button type="submit" class="btn-success">Зайти в игру</button>
+        <button type="submit" class="btn btn-primary">Зайти в игру</button>
     </div>
 </form>
+
+<br>
+
 </body>
+
 
 <%--
 

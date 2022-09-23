@@ -32,4 +32,9 @@ public class UserTest {
         verify(user).addItem(1);
         assertEquals(1,user.getItems().size());
     }
+
+    @Test
+    void test_WhenGetUserQuest_ShouldCloneQuests() throws ServletException, IOException {
+         assertEquals(user.getUserQuests(), user.getUserQuests());
+    }
 }

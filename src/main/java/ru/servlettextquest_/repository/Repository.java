@@ -14,4 +14,16 @@ public class Repository<K, T> {
         return repository.get(id);
     }
 
+    public Integer size(){
+        return repository.size();
+        /*if (repository==null){
+            return 0;
+        } else {
+            return repository.size();
+        }*/
+
+    }
+
+
+
 }
