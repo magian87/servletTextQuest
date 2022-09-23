@@ -11,6 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.servlettextquest_.classes.CheckItemInventoryPredicate;
+import ru.servlettextquest_.classes.Quest;
 import ru.servlettextquest_.classes.Question;
 import ru.servlettextquest_.classes.User;
 import ru.servlettextquest_.repository.Repository;
@@ -75,6 +77,18 @@ public class DialogServletTest {
                 //.thenReturn(new Repository<Integer, Question>());
                 .thenReturn(questionRepository);
 
+
+        Quest quest = Quest.builder()
+                .id(1)
+                .text("Парализатор")
+                .isFinished(new CheckItemInventoryPredicate(2))
+                .build();
+
+        Repository<Integer, Quest> questRepository = new Repository<>();
+        questRepository.save(quest.getId(), quest);
+        when(servletContext.getAttribute(argThat("questRepository"::equals)))
+                .thenReturn(questRepository);
+
         dialogServlet.init(servletConfig);
     }
 
@@ -82,6 +96,11 @@ public class DialogServletTest {
     void testDoGet_WhenParameterFinishIsExists_ShouldSendRedirect() throws ServletException, IOException {
         when(request.getParameter(argThat("finish"::equals)))
                 .thenReturn("true");
+
+        when(request.getSession()).thenReturn(httpSession);
+        User user = mock(User.class);
+        when(httpSession.getAttribute("user")).thenReturn(user);
+
          dialogServlet.doGet(request, response);
         verify(response).sendRedirect(argThat("room"::equals));
     }
@@ -117,6 +136,10 @@ public class DialogServletTest {
         //RequestDispatcher dispatcher = mock(RequestDispatcher.class);
 
         when(servletContext.getRequestDispatcher("/dialog.jsp")).thenReturn(dispatcher);
+
+        when(request.getSession()).thenReturn(httpSession);
+        User user = mock(User.class);
+        when(httpSession.getAttribute("user")).thenReturn(user);
 
         dialogServlet.doGet(request, response);
         verify(dispatcher).forward(request, response);

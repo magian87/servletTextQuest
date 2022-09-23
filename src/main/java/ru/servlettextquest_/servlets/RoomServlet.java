@@ -3,6 +3,7 @@ package ru.servlettextquest_.servlets;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.ParameterizedMessage;
 import ru.servlettextquest_.classes.*;
 import ru.servlettextquest_.repository.Repository;
 import ru.servlettextquest_.repository.RoomRepository;
@@ -98,10 +99,13 @@ public class RoomServlet extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
 
         if (req.getParameter("nextRoomId") != null) {
-            String nextRoomId = req.getParameter("nextRoomId");
-            user.setCurrentRoomId(Integer.parseInt(nextRoomId));
-            LOGGER.info("Смена локации на" + nextRoomId);
-        }
+            Integer nextRoomId = Integer.parseInt(req.getParameter("nextRoomId"));
+
+            user.setCurrentRoomId(nextRoomId);
+            LOGGER.info(
+                    new ParameterizedMessage("Пользователь: {}, перешел в комнату: {}",
+                            user.getUsername(), roomRepository.getById(nextRoomId).getName()));
+         }
 
         if (req.getParameter("addItemId") != null) {
             Integer itemId = Integer.parseInt(req.getParameter("addItemId"));
@@ -116,6 +120,11 @@ public class RoomServlet extends HttpServlet {
 
 
             user.addItem(itemId);
+
+            LOGGER.info(
+                    new ParameterizedMessage("Пользователь: {}, поднял: {}",
+                            user.getUsername(), curItem.getName()));
+
             //Item curItem = itemRepository.getById()
 
             boolean isAllQuestFinished = true;
@@ -137,6 +146,9 @@ public class RoomServlet extends HttpServlet {
             }
             if (isAllQuestFinished){
                 user.setIsGameOver(true);
+                LOGGER.info(
+                        new ParameterizedMessage("Пользователь: {}, завершил игру.",
+                                user.getUsername()));
             }
 
         }

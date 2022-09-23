@@ -1,5 +1,9 @@
 package ru.servlettextquest_.servlets;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.ParameterizedMessage;
+import ru.servlettextquest_.classes.Quest;
 import ru.servlettextquest_.classes.Question;
 import ru.servlettextquest_.classes.User;
 import ru.servlettextquest_.repository.Repository;
@@ -20,8 +24,10 @@ import java.util.Map;
 @WebServlet(name = "DialogServlet", value = "/dialog")
 //@WebServlet(name = "DialogServlet", value = "/dialog", initParams = @WebInitParam(name = "location", value = "D:/Uploads"))
 public class DialogServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(DialogServlet.class);
 
-    private Repository<Integer, Question> questionRepository;
+    private Repository<Integer, Question> questionRepository = null;
+    private Repository<Integer, Quest> questRepository = null;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -29,22 +35,31 @@ public class DialogServlet extends HttpServlet {
         ServletContext servletContext = config.getServletContext();
 
         questionRepository = (Repository<Integer, Question>) servletContext.getAttribute("questionRepository");
+        questRepository = (Repository<Integer, Quest>) servletContext.getAttribute("questRepository");
 
     }
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        User user = (User) req.getSession().getAttribute("user");
         if(req.getParameter("finish") != null) {
             resp.sendRedirect("room");
+
+            LOGGER.info(
+                    new ParameterizedMessage("Пользователь: {}, завершил диалог.",
+                            user.getUsername()));
             return;
         }
 
         if(req.getParameter("quest") != null) {
-            String questId = req.getParameter("quest");
+            Integer questId = Integer.parseInt(req.getParameter("quest"));
 
-            User user = (User) req.getSession().getAttribute("user");
-            user.addQuest(Integer.parseInt(questId));
+            user.addQuest(questId);
+
+            LOGGER.info(
+                    new ParameterizedMessage("Пользователь: {}, взял квест {}.",
+                            user.getUsername(), questRepository.getById(questId).getText()));
+
 
             resp.sendRedirect("room");
             return;
