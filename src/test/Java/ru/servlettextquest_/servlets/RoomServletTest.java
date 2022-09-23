@@ -7,12 +7,11 @@ import org.mockito.Mock;
 
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.servlettextquest_.classes.Item;
-import ru.servlettextquest_.classes.Npc;
-import ru.servlettextquest_.classes.User;
+import ru.servlettextquest_.classes.*;
 import ru.servlettextquest_.repository.Repository;
 import ru.servlettextquest_.repository.RoomRepository;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -20,11 +19,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class RoomServletTest {
@@ -45,6 +44,8 @@ public class RoomServletTest {
 
     @Mock
     private User user;
+    @Mock
+    private RequestDispatcher dispatcher;
 
     @Spy
     private RoomServlet roomServlet;
@@ -56,6 +57,9 @@ public class RoomServletTest {
         Item item = Item.builder()
                 .id(1)
                 .name("Меч")
+                .strength(30)
+                .dexterity(60)
+                .life(90)
                 .build();
 
         Repository<Integer, Item> itemRepository = new Repository<>();
@@ -73,6 +77,26 @@ public class RoomServletTest {
                 .thenReturn(npcRepository);
 
         RoomRepository roomRepository = new RoomRepository();
+
+        Room garden = Room.builder()
+                .id(2)
+                .name("Сад")
+                .npcs(List.of(1))
+                .items(List.of(1, 4))
+                .build();
+
+        Room hotel = Room.builder()
+                .id(3)
+                .name("Отель")
+                .items(List.of(2))
+                .build();
+
+        garden.addDoor(Door.builder().roomId(hotel.getId()).build());
+
+
+        roomRepository.save(garden.getId(), garden);
+        roomRepository.save(hotel.getId(), hotel);
+
         when(servletContext.getAttribute(argThat("roomRepository"::equals)))
                 .thenReturn(roomRepository);
 
@@ -101,26 +125,51 @@ public class RoomServletTest {
 
     @Test
     void testDoPost_WhenParameterAddItemIdIsExists_ShouldAddItemToUser() throws ServletException, IOException {
+        when(request.getSession()).thenReturn(httpSession);
+
+        User user1 = spy(User.class);
+        user1.setLife(100);
+        user1.setDexterity(100);
+        user1.setStrength(100);
+
+        when(httpSession.getAttribute("user")).thenReturn(user1);
+
+
         when(request.getParameter(argThat("nextRoomId"::equals)))
                 .thenReturn(null);
 
         when(request.getParameter(argThat("addItemId"::equals)))
                 .thenReturn("1");
 
-        when(request.getSession()).thenReturn(httpSession);
-        when(httpSession.getAttribute("user")).thenReturn(user);
 
         roomServlet.doPost(request, response);
-        verify(user).addItem(1);
+        verify(user1).addItem(1);
+
+        Item item = mock(Item.class);
+
+        assertEquals(130, user1.getStrength());
+
+
+        assertEquals(160, user1.getDexterity());
+
+        assertEquals(190, user1.getLife());
         verify(response).sendRedirect(argThat("room"::equals));
     }
 
-   /* @Test
+    @Test
     void testDoGet_XXX() throws ServletException, IOException {
         when(request.getSession()).thenReturn(httpSession);
-        when(httpSession.getAttribute("user")).thenReturn(user);
+        User user1 = spy(User.class);
+        user1.setCurrentRoomId(2);
+        when(httpSession.getAttribute("user")).thenReturn(user1);
+
+        when(servletContext.getRequestDispatcher("/room.jsp")).thenReturn(dispatcher);
 
         roomServlet.doGet(request, response);
 
-    }*/
+
+        verify(dispatcher).forward(request, response);
+
+
+    }
 }

@@ -98,7 +98,6 @@ public class DialogServletTest {
                 .thenReturn("1");
 
         when(request.getSession()).thenReturn(httpSession);
-
         User user = mock(User.class);
         when(httpSession.getAttribute("user")).thenReturn(user);
 
@@ -123,6 +122,7 @@ public class DialogServletTest {
         when(servletContext.getRequestDispatcher("/dialog.jsp")).thenReturn(dispatcher);
 
         dialogServlet.doGet(request, response);
+        verify(dispatcher).forward(request, response);
 
 
     }

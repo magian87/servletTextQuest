@@ -5,6 +5,7 @@ import ru.servlettextquest_.classes.*;
 import ru.servlettextquest_.repository.Repository;
 import ru.servlettextquest_.repository.RoomRepository;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -77,9 +78,10 @@ public class RoomServlet extends HttpServlet {
         req.setAttribute("items", items);
 
 
-        getServletContext()
-                .getRequestDispatcher("/room.jsp")
-                .forward(req, resp);
+        RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/room.jsp");
+        requestDispatcher.forward(req, resp);
+
+
     }
 
     @Override
@@ -105,6 +107,7 @@ public class RoomServlet extends HttpServlet {
 
             user.addItem(itemId);
             //Item curItem = itemRepository.getById()
+
         }
 
         resp.sendRedirect("room");
