@@ -28,6 +28,8 @@ public class QuestTest {
     @Test
     void testIsFinish_WhenUserIncludeItem_ShouldTrue() {
         assertTrue(false);
+
+
         /*quest.setId(1);
         quest.setText("111");
 
