@@ -16,6 +16,7 @@ public class CheckItemInventoryPredicate implements Predicate<User> {
 
     @Override
     public boolean test(User user) {
+
         return user.getItems().contains(neededItemId);
     }
 }

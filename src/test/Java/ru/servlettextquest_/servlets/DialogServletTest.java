@@ -5,13 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.BDDMockito.*;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.servlettextquest_.classes.Question;

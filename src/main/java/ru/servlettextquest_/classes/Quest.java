@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import java.util.function.Predicate;
 
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Quest {
     private Integer id;
