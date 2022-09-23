@@ -6,7 +6,7 @@ on:
       - '*'
   push:
     branches:
-      - 'master'
+      - 'dev'
 
 
 jobs:
@@ -19,4 +19,4 @@ jobs:
         with:
           java-version: 17
       - name: Maven Package
-        run: mvn -B clean package -DskipTests
+        run: mvn -B clean install
