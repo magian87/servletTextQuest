@@ -27,20 +27,20 @@ public class QuestTest {
 
     @Test
     void testIsFinish_WhenUserIncludeItem_ShouldTrue() {
-        assertTrue(false);
+       /* assertTrue(true);*/
 
 
-        /*quest.setId(1);
+        quest.setId(1);
         quest.setText("111");
 
         user.addItem(1);
 
-        when(quest.isFinished(user)).thenReturn(user.)
-
+        quest.setIsFinished(new CheckItemInventoryPredicate(1));
 
 
         quest.isFinished(user);
-        assertTrue(new CheckItemInventoryPredicate(1).test(user));*/
+       // quest.isFinished(predicate.test(user));
+        assertTrue(new CheckItemInventoryPredicate(1).test(user));
     }
 
 }

@@ -1,6 +1,8 @@
 package ru.servlettextquest_.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.servlettextquest_.classes.*;
 import ru.servlettextquest_.repository.Repository;
 import ru.servlettextquest_.repository.RoomRepository;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 
 @WebServlet(name = "RoomServlet", value = "/room")
 public class RoomServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(RoomServlet.class);
+
     private RoomRepository roomRepository = null;
     private Repository<Integer, Npc> npcRepository = null;
     private Repository<Integer, Item> itemRepository = null;
@@ -91,6 +95,7 @@ public class RoomServlet extends HttpServlet {
         if (req.getParameter("nextRoomId") != null) {
             String nextRoomId = req.getParameter("nextRoomId");
             user.setCurrentRoomId(Integer.parseInt(nextRoomId));
+            LOGGER.info("Смена локации на" + nextRoomId);
         }
 
         if (req.getParameter("addItemId") != null) {
@@ -109,6 +114,7 @@ public class RoomServlet extends HttpServlet {
             //Item curItem = itemRepository.getById()
 
         }
+
 
         resp.sendRedirect("room");
 
