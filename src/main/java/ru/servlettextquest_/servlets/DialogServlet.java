@@ -69,6 +69,10 @@ public class DialogServlet extends HttpServlet {
         Question question_ = questionRepository.getById(Integer.parseInt(questionId));
         req.setAttribute("question", question_);
 
+        LOGGER.info(
+                new ParameterizedMessage("Пользователю задан вопрос: {}.",
+                        question_.getText()));
+
         /*getServletContext()
                 .getRequestDispatcher("/dialog.jsp")
                 .forward(req, resp);*/

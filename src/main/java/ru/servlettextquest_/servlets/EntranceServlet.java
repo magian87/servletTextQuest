@@ -1,5 +1,8 @@
 package ru.servlettextquest_.servlets;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.ParameterizedMessage;
 import ru.servlettextquest_.classes.Room;
 import ru.servlettextquest_.classes.User;
 
@@ -15,6 +18,7 @@ import java.io.IOException;
 
 @WebServlet(name = "EntranceServlet", value = "/entrance")
 public class EntranceServlet extends HttpServlet {
+    private static final Logger LOGGER = LogManager.getLogger(EntranceServlet.class);
 
 
     @Override
@@ -39,6 +43,10 @@ public class EntranceServlet extends HttpServlet {
 
 
         session.setAttribute("user", user);
+
+        LOGGER.info(
+                new ParameterizedMessage("Пользователь: {}, зашел в игру.",
+                        user.getUsername()));
 
         resp.sendRedirect("room");
 
