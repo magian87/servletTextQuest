@@ -25,7 +25,7 @@ public class QuestTest {
     @Mock
     private CheckItemInventoryPredicate checkItemInventoryPredicate;
 
-    @Test
+    /*@Test
     void testIsFinish_WhenUserIncludeItem_ShouldTrue() {
         quest.setId(1);
         quest.setText("111");
@@ -38,6 +38,6 @@ public class QuestTest {
 
         quest.isFinished(user);
         assertTrue(new CheckItemInventoryPredicate(1).test(user));
-    }
+    }*/
 
 }
